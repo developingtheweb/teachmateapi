@@ -23,7 +23,7 @@ class YoutubeController extends Controller
     public function getTranscript()
     {
         // Define the Python script and its location
-        $script = base_path('transcript.py');
+        $script = base_path('scripts/transcript.py');
         
         // Create the process to run the script
         $process = new Process(['python3', '-u', $script, $this->videoid]);
@@ -62,7 +62,7 @@ class YoutubeController extends Controller
     private function getVideoName()
     {
         $apiKey = env('GOOGLE_API_KEY');
-        $script = base_path('videoname.py');
+        $script = base_path('scripts/videoname.py');
         
         // Create the process to run the script
         $process = new Process(['python3', $script, $this->videoid, $apiKey]);
