@@ -13,7 +13,7 @@ class YoutubeController extends Controller
 {
 
     public $videoid;
-    public $finalTranscript = ['text' => ''];
+    public $finalTranscript = ['text' => 'No transcript available'];
 
     public function __construct(Request $request)
     {   
@@ -50,8 +50,12 @@ class YoutubeController extends Controller
             // Log JSON decoding errors
             \Log::error('JSON decoding error: ' . json_last_error_msg());
         }
-        foreach ($transcript as $key => $value) {
-            $this->finalTranscript['text'] .= ' ' . $value['text'];
+        if (!empty($transcript)) {
+            foreach ($transcript as $key => $value) {
+                if (!empty($value['text'])) {
+                    $this->finalTranscript['text'] .= ' ' . $value['text'];
+                }
+            }
         }
 
         $this->finalTranscript['metal'] = $this->getVideoName();
