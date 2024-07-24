@@ -52,14 +52,13 @@ class YoutubeController extends Controller
         }
         if (!empty($transcript)) {
             foreach ($transcript as $key => $value) {
-                if (!empty($value['text'])) {
+                if (!empty($value['text']) && $value['text'] !== 'No transcript available') {
                     $this->finalTranscript['text'] .= ' ' . $value['text'];
                 }
             }
         }
-
+        $this->finalTranscript['text'] = str_replace('No transcript available', '', $this->finalTranscript['text']);
         $this->finalTranscript['metal'] = $this->getVideoName();
-        
         return response()->json($this->finalTranscript);
         
     }
